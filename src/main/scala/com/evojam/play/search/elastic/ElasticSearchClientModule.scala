@@ -14,7 +14,7 @@ import net.codingwell.scalaguice.ScalaModule
 
 import com.evojam.play.search.elastic.config.ElasticSearchConfig
 
-class ElasticSearchClientModule extends ScalaModule {
+object ElasticSearchClientModule extends ScalaModule {
 
   override def configure() =
     bind[ElasticSearchClient].to[ElasticSearchClientImpl].in[Singleton]
