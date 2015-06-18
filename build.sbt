@@ -36,7 +36,7 @@ val playV = "2.3.9"
 
 libraryDependencies ++= Seq(
   "com.google.inject" % "guice" % "4.0-beta5",
-  "com.sksamuel.elastic4s" %% "elastic4s" % "1.3.4",
+  "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.0",
   "com.typesafe.play" %% "play-json" % playV,
   "com.typesafe.play" %% "play-ws" % playV,
   "net.codingwell" %% "scala-guice" % "4.0.0-beta5"
