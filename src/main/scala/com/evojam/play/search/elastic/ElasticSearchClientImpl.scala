@@ -51,9 +51,9 @@ private final class ElasticSearchClientImpl @Inject() (elastic: ElasticClient) e
           case Some(response) if response.isCreated =>
             logger.info("Document has been indexed (create), retrieving headers= " + getHeaders(response))
             true
-          case Some(response) =>
+          case Some(response) if !response.isCreated =>
             logger.info("Document has been indexed (update), retrieving headers= " + getHeaders(response))
-            false
+            true
           case None =>
             logger.error("Elastic execute result IndexResponse is null, I treat it as an error but can do nothing")
             false
