@@ -3,21 +3,24 @@ package com.evojam.play.search.elastic
 import scala.collection.JavaConversions._
 import scala.util.control.Exception.catching
 
-import play.api.Configuration
+import play.api.{Configuration, Play}
 
 import org.elasticsearch.common.settings.ImmutableSettings
 
-import com.google.inject.Provides
-import com.google.inject.Singleton
-import com.sksamuel.elastic4s.{ElasticsearchClientUri, ElasticClient}
+import com.google.inject.{Provides, Singleton}
+import com.sksamuel.elastic4s.{ElasticClient, ElasticsearchClientUri}
 import net.codingwell.scalaguice.ScalaModule
 
 import com.evojam.play.search.elastic.config.ElasticSearchConfig
+import com.evojam.play.search.elastic.mock.MockElasticSearchClientImpl
 
 object ElasticSearchClientModule extends ScalaModule {
 
   override def configure() =
-    bind[ElasticSearchClient].to[ElasticSearchClientImpl].in[Singleton]
+    Play.current.configuration.getBoolean("elasticsearch.enabled").getOrElse(false) match {
+      case true => bind[ElasticSearchClient].to[ElasticSearchClientImpl].in[Singleton]
+      case false => bind[ElasticSearchClient].to[MockElasticSearchClientImpl].in[Singleton]
+    }
 
   @Provides @Singleton
   def config(configuration: Configuration) =
