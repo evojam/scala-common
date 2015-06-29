@@ -7,12 +7,11 @@ import scala.language.implicitConversions
 import play.api.Logger
 import play.api.libs.json._
 
-import org.elasticsearch.action.ActionResponse
-
 import com.google.inject.Inject
-import com.sksamuel.elastic4s.ElasticClient
+import com.sksamuel.elastic4s.{SearchDefinition, ElasticClient}
 import com.sksamuel.elastic4s.ElasticDsl._
 import com.sksamuel.elastic4s.source.DocumentSource
+import org.elasticsearch.action.ActionResponse
 
 private final class ElasticSearchClientImpl @Inject() (elastic: ElasticClient) extends ElasticSearchClient {
   require(elastic != null, "elastic cannot be null")
@@ -37,6 +36,9 @@ private final class ElasticSearchClientImpl @Inject() (elastic: ElasticClient) e
         .doc(in)
         .id(id)
     }
+
+  override def search(searchDef: SearchDefinition) =
+    elastic.execute(searchDef)
 
   override def indexDocument[T](indexName: String, doctype: String, id: String, doc: T)(implicit w: Writes[T]) = {
     require(indexName != null, "indexName cannot be null")
