@@ -90,7 +90,7 @@ private final class ElasticSearchClientImpl @Inject() (elastic: ElasticClient) e
             true
           case Some(response) =>
             logger.info("Document has been updated, retrieving headers=" + getHeaders(response))
-            false
+            true
           case None =>
             logger.error("Elastic execute update result IndexResponse is null, " +
                          "Treating it as an error but can do nothing")
