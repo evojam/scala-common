@@ -39,6 +39,7 @@ libraryDependencies ++= Seq(
   "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.0",
   "com.typesafe.play" %% "play-json" % playV,
   "com.typesafe.play" %% "play-ws" % playV,
-  "net.codingwell" %% "scala-guice" % "4.0.0-beta5"
+  "net.codingwell" %% "scala-guice" % "4.0.0-beta5",
+  "org.scalanlp" %% "epic" % "0.3.1"
 )
 
