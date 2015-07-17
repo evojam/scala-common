@@ -10,23 +10,27 @@ import com.google.inject.Inject
 private[util] class ObjectLoaderImpl @Inject() () extends ObjectLoader {
   override def load[T](file: File, gzipped: Boolean) =
     (file.exists, gzipped) match {
-      case (true, true) => loadGzip[T](file)
-      case (true, false) => loadRaw[T](file)
+      case (true, true) => loadGzip[T](new FileInputStream(file))
+      case (true, false) => loadRaw[T](new FileInputStream(file))
       case _ => None
     }
 
-  private def loadGzip[T](file: File): Option[T] = {
+  override def loadResource[T](name: String, gzipped: Boolean) =
+    gzipped match {
+      case true => loadGzip[T](resource(name))
+      case false => loadRaw[T](resource(name))
+    }
+
+  private def loadGzip[T](is: InputStream): Option[T] = {
     val in = breeze.util.nonstupidObjectInputStream(
       new BufferedInputStream(
-        new GZIPInputStream(
-          new FileInputStream(file))))
+        new GZIPInputStream(is)))
     readObject[T](in)
   }
 
-  private def loadRaw[T](file: File): Option[T] = {
+  private def loadRaw[T](is: InputStream): Option[T] = {
     val in = breeze.util.nonstupidObjectInputStream(
-      new BufferedInputStream(
-        new FileInputStream(file)))
+      new BufferedInputStream(is))
     readObject[T](in)
   }
 
@@ -38,4 +42,7 @@ private[util] class ObjectLoaderImpl @Inject() () extends ObjectLoader {
         in.close()
       }
     }
+
+  private def resource(name: String): InputStream =
+    getClass().getClassLoader().getResourceAsStream(name)
 }

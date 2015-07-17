@@ -40,6 +40,7 @@ libraryDependencies ++= Seq(
   "com.typesafe.play" %% "play-json" % playV,
   "com.typesafe.play" %% "play-ws" % playV,
   "net.codingwell" %% "scala-guice" % "4.0.0-beta5",
+  "org.ocpsoft.prettytime" % "prettytime-nlp" % "3.2.7.Final",
   "org.scalanlp" %% "epic" % "0.3.1"
 )
 
