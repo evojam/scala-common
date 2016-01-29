@@ -1,4 +1,4 @@
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 organization := "com.evojam"
 
@@ -32,14 +32,13 @@ resolvers ++= Seq(
   Resolver.typesafeIvyRepo("releases")
 )
 
-val playV = "2.3.9"
+val playV = "2.4.6"
 
 libraryDependencies ++= Seq(
-  "com.google.inject" % "guice" % "4.0-beta5",
-  "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.0",
+  "com.sksamuel.elastic4s" %% "elastic4s-core" % "1.6.6",
   "com.typesafe.play" %% "play-json" % playV,
   "com.typesafe.play" %% "play-ws" % playV,
-  "net.codingwell" %% "scala-guice" % "4.0.0-beta5",
+  "net.codingwell" %% "scala-guice" % "4.0.1",
   "org.ocpsoft.prettytime" % "prettytime-nlp" % "3.2.7.Final",
   "org.scalanlp" %% "epic" % "0.3.1"
 )
